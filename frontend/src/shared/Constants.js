@@ -1,0 +1,4 @@
+export const BACKGROUND_PRIMARY_COLOR = '#000';
+export const BACKGROUND_SECONDARY_COLOR = '#424242';
+export const TEXT_PRIMARY_COLOR = '#FFF';
+
