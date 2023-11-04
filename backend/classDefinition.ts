@@ -12,6 +12,10 @@ const classObj = {
     vectorIndexConfig: {
         distance: 'cosine',
     },
+    moduleConfig: {
+        'text2vec-cohere': {},
+        'generative-cohere': {},
+    }
 }
 
 export default classObj;
