@@ -1,8 +1,6 @@
 import { Server as HttpServer } from "http";
 import { Socket, Server } from "socket.io";
 
-type Color = "white" | "black";
-
 export class ServerSocket {
   public static instance: ServerSocket;
   public io: Server;
