@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useNavigate } from 'react-router-dom';
 
-const Upload = ({ onUpload }) => {
+const Upload = () => {
     const [error, setError] = useState(null);
     const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
         accept: 'application/pdf',
@@ -9,15 +10,35 @@ const Upload = ({ onUpload }) => {
         onDropAccepted: () => setError(null),
     });
 
-    const handleUpload = () => {
+    const navigate = useNavigate();
+
+    const handleUpload = async () => {
         const file = acceptedFiles[0];
-        const url = URL.createObjectURL(file);
-        onUpload(url);
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                console.log('Uploading file...', file);
+                const response = await fetch('http://localhost:3001/uploads', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await response.json();
+                console.log(data);  // Log the response from the server
+                navigate('/display');  // Navigate to the display route
+            } catch (error) {
+                console.error('There was an error uploading the file:', error);
+            }
+        } else {
+            setError('No file selected');
+        }
     };
 
     return (
         <div {...getRootProps()}>
-            <input {...getInputProps()} />
+            {/* <input {...getInputProps()} /> */}
+            <input type="file" {...getInputProps()} name="file" />
             <p>Drag 'n' drop some files here, or click to select files</p>
             {error && <p>{error}</p>}
             <button onClick={handleUpload}>Upload</button>
