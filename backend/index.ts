@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import { weaviateRoute } from './weaviateRoute'; 
+import { ClientRequest } from 'http';
 
 dotenv.config;
 
@@ -10,6 +11,7 @@ if (!weaviate_key) {
 }
 
 const weaviateClient = new weaviateRoute(weaviate_key);
-weaviateClient.connect();
+await weaviateClient.initSchema();
+console.log(JSON.stringify(await weaviateClient.getSchema(), null, 2));
 
 console.log("Hello via Bun!");
