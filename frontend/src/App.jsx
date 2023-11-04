@@ -4,7 +4,7 @@ import { useRoutes, useNavigate } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Upload from './pages/Upload.jsx'
-import Display from './pages/Display.jsx'
+// import Display from './pages/Display.jsx'
 
 import './App.css'
 
@@ -22,10 +22,10 @@ function App() {
       path: '/',
       element: <Upload onUpload={handleUpload} />,
     },
-    {
-      path: '/display',
-      element: file ? <Display file = {file} /> : null,
-    }
+    // {
+    //   path: '/display',
+    //   element: file ? <Display file = {file} /> : null,
+    // }
   ])
 
   return (
