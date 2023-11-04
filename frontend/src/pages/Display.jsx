@@ -19,13 +19,13 @@ import { Worker, Viewer } from '@react-pdf-viewer/core';
 
 const Display = ({ file }) => {
     console.log('file on display:', file)
-    const fileUrl = localStorage.getItem(file);
-    console.log(fileUrl)
+    // const fileUrl = localStorage.getItem(file);
+    // console.log(fileUrl)
 
   return (
     <div style={{ height: '750px' }}>
       <Worker workerUrl="//unpkg.com/pdfjs-dist@2.9.359/build/pdf.worker.min.js">
-        <Viewer fileUrl={fileUrl} />
+        <Viewer fileUrl={file} />
       </Worker>
     </div>
   );
