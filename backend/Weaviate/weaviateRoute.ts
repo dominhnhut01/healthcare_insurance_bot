@@ -18,14 +18,14 @@ export class weaviateRoute {
 
     // Return the current class schema as a WeaviateClass
     async getSchema() : Promise<WeaviateClass> {
-        var res = await this.client.schema.getter().do() as WeaviateClass;
+        const res = await this.client.schema.getter().do() as WeaviateClass;
         return res;
     }
 
     // Initialize a class schema using the provided classDefinition.ts
     // if the schema doesn't already exists.
     async initSchema() {
-        var curSchema = await this.client.schema.getter().do();
+        const curSchema = await this.client.schema.getter().do();
         if (curSchema.classes?.some((existingClass) => existingClass.class === classDefinition.class)) {
             console.log('Class schema already exists');
         } else {
@@ -40,7 +40,7 @@ export class weaviateRoute {
             await this.client.schema.classDeleter().withClassName(className).do();
             console.log('Schema deleted successfully');
         } catch (error) {
-            console.log(error);
+            throw new Error('Operation could not be completed');
         }
     }
 
@@ -69,9 +69,8 @@ export class weaviateRoute {
             .withGenerate({singlePrompt: 'Select out the most important parts in the {information}'})
             .withLimit(1)
             .do();
-    
-        console.log('cac');    
-        console.log(JSON.stringify(res, null, 2));
+       
+        //console.log(JSON.stringify(res, null, 2));
         return res;
     }
 

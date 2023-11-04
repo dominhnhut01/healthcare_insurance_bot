@@ -2,7 +2,7 @@ import http from 'http';
 import express from 'express';
 import { ServerSocket } from './socket';
 import * as dotenv from 'dotenv';
-import { weaviateRoute } from './weaviateRoute'; 
+import { weaviateRoute } from './Weaviate/weaviateRoute'; 
 
 dotenv.config;
 
