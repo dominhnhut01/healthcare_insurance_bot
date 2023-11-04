@@ -11,7 +11,7 @@ export class PdfHandler {
       const buffer: Buffer = fs.readFileSync(filepath);
       this.pdfBuffer = new Uint8Array(buffer);
     } catch (e: any) {
-      console.log("Error reading file!");
+      throw new Error("Error reading file!");
     }
   }
 
