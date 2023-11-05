@@ -40,6 +40,5 @@ export class PdfHandler {
   }
 
 }
-const pdfHandler = new PdfHandler('./test2.pdf');
-console.log(await pdfHandler.getParsedContent());
-
+// const pdfHandler = new PdfHandler('./test2.pdf');
+// console.log(await pdfHandler.getParsedContent());
