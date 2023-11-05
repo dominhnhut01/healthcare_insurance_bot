@@ -14,7 +14,6 @@ const styles = (theme) => ({
   paperUser: {
     background: theme.palette.text.secondary,
     padding: theme.spacing(2),
-    borderRadius: theme.spacing(2),
     alignSelf:'flex-end',
     borderRadius: '0.75rem 0.75rem 0 0.75rem',
     maxWidth: '25rem',
