@@ -45,7 +45,8 @@ export class ServerSocket {
   }
   async messageSender(socket: Socket, message: string): Promise<void> {
     const keywordString = await this.keywordExtractor.extractKeywordFromMessage(message);
-    const response = await this.weaviateRoute.generativeQuery(keywordString);
+    const response = await this.weaviateRoute.generativeQuery('testID1', keywordString, message);
+    //const response = await this.weaviateRoute.getEverything('testID0');
     socket.emit("message", response.data.Get.EOC[0]._additional.generate.singleResult);
   }
 }
