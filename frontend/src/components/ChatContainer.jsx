@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
 import { socket } from '../socket';
 import ChatContent from './chat/ChatContent';
+import icon from '../assets/logo-removebg.png';
 
 const styles = (theme) => ({
   container: {
@@ -14,7 +15,7 @@ const styles = (theme) => ({
     height: "50rem",
   },
   chat: {
-    height: '45rem',
+    height: '50rem',
     overflow: 'auto',
     padding: theme.spacing(3),
   },
@@ -22,7 +23,17 @@ const styles = (theme) => ({
     paddingLeft: '2rem',
     paddingRight: '2rem',
     paddingBottom: '1rem',
+    paddingTop: '1rem',
   },
+  icon: {
+    width: '3rem',  // Adjust the dimensions to your preference
+    height: '3rem',  // Adjust the dimensions to your preference
+    marginRight: theme.spacing(1),  // Adds some spacing between the icon and the input
+  },
+  iconContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  }
 });
 
 const ChatContainer = (props) => {
@@ -66,7 +77,14 @@ const ChatContainer = (props) => {
             />
           </Grid>
           <Grid item className={classes.input}>
-            <ChatInput inputEventListener={inputMessageListener} />
+            <Grid container alignItems="center">
+              <Grid item className={classes.iconContainer}>
+                <img src={icon} alt="logo" className={classes.icon} />
+              </Grid>
+              <Grid item flex={1}>
+                <ChatInput inputEventListener={inputMessageListener} />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
