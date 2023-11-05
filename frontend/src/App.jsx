@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRoutes, useNavigate } from "react-router-dom";
 import Upload from "./pages/Upload.jsx";
 import ChatContainer from "./components/ChatContainer";
-
+import LandingPage from "./pages/LandingPage.jsx";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
@@ -28,20 +28,34 @@ function App() {
     alert("File upload cancelled. Please upload a file.");
   };
 
+  const element = useRoutes([
+    {
+      path: '/',
+      element: <LandingPage />,
+    },
+    {
+      path: '/chat',
+      element: (
+        !open ? <ChatContainer />
+        :
+        (
+          <Backdrop open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Upload a File</DialogTitle>
+              <DialogContent>
+                <Upload onUpload={handleUpload} />
+              </DialogContent>
+            </Dialog>
+          </Backdrop>
+        )
+      ),
+    }
+  ]);
+
+
   return (
     <>
-      {!open ? <ChatContainer />
-      :
-        (
-        <Backdrop open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Upload a File</DialogTitle>
-            <DialogContent>
-              <Upload onUpload={handleUpload} />
-            </DialogContent>
-          </Dialog>
-        </Backdrop>
-        )}
+      {element}
     </>
   );
 }
