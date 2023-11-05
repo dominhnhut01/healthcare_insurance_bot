@@ -28,7 +28,7 @@ export class PdfHandler {
     // construct the content
     const textContents: string[] = [];
 
-    for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
+    for (let pageNumber = 30; pageNumber <= 40; pageNumber++) {
       const page = await pdfDocument.getPage(pageNumber);
       const textContent = await page.getTextContent();
       const pageText = textContent.items.forEach((item) => {

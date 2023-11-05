@@ -23,7 +23,7 @@ const Upload = ({ onUpload }) => {
     setFile(file);
     if (file) {
       try {
-        socket.emit("uploads", file, (status) => {
+        socket.emit("upload", file, (status) => {
           console.log(status.succeed);
         });
         onUpload(file);

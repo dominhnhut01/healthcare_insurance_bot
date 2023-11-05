@@ -65,28 +65,6 @@ const storage = multer.diskStorage({
     }
 });
 
-/**
- * The single() function takes the name of the field from the form that contains the file data,
- * and sets req.file to be the file object that contains information about the file.
- * If you want to upload multiple files, you can use the array() function instead.
- */
-const upload = multer({ storage: storage });
-
-/**
- * The upload.single() middleware is used when uploading a single file.
- * It accepts a single file with the name attribute file.
- * The single file will be stored in req.file.
- * If you want to upload multiple files, you can use the array() function instead.
- */
-app.post('/uploads', upload.single('file'), (req, res) => {
-  res.json({ message: 'File uploaded successfully' })
-  console.log(res);
-}, (req, res, error) => {
-    // This error handler is called if multer throws an error
-    console.error(error);
-    res.status(500).send(error || 'Internal server error');
-});
-
 /** Listen */
 const port = 4800
 httpServer.listen(port, () => console.info(`Server is running at port ${port}`));
