@@ -35,7 +35,6 @@ export class ServerSocket {
 
     socket.on("disconnect", () => {
       console.info("Disconnect received from: " + socket.id);
-      socket.emit("disconnect")
     });
   };
 
