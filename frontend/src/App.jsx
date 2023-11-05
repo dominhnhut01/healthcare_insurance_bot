@@ -41,7 +41,7 @@ function App() {
         (
           <Backdrop open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Upload a File</DialogTitle>
+              <DialogTitle>Upload your EOC Document to start</DialogTitle>
               <DialogContent>
                 <Upload onUpload={handleUpload} />
               </DialogContent>
