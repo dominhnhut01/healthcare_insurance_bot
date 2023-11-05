@@ -4,6 +4,16 @@ const classObj = {
     properties: [
         {
             dataType: ['text'],
+            description: 'The current user Id',
+            name: 'UID',
+            moduleConfig: {
+                'text2vec-cohere': {
+                    skip: true
+                },
+            },
+        },
+        {
+            dataType: ['text'],
             description: 'Closest information related to provided question',
             name: 'information',
         },

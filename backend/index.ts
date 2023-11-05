@@ -48,22 +48,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-/** Socket Information */
-// app.get('/status', (req, res, next) => {
-//     return res.status(200).json({ users: ServerSocket.instance.rooms });
-// });
-
-/** Error handling */
-// app.use((req, res, next) => {
-//     const error = new Error('Not found');
-
-//     res.status(404).json({
-//         message: error.message
-//     });
-// });
-
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const dir = './uploads/';
