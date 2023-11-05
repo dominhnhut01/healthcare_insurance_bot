@@ -34,9 +34,9 @@ const styles = (theme) => ({
 
 const ChatInput = (props) => {
   const [message, setMessage] = useState("");
+  event.preventDefault();
   const handleSendMessage = (event) => {
     if (message.length > 0) {
-      event.preventDefault();
       props.inputEventListener(message);
       setMessage('');
     }

@@ -3,7 +3,7 @@ import { Socket, Server } from "socket.io";
 import { KeywordExtractor } from "./QuestionAndAnswer/KeywordExtractor";
 import { WeaviateRoute } from "./Weaviate/weaviateRoute";
 import { v4 as uuidv4 } from "uuid";
-import { writeFile } from "fs";
+import * as fs from "node:fs/promises";
 import { unlink } from "node:fs/promises";
 import { PdfHandler } from "./UploadPDF/PdfHandler";
 
@@ -44,51 +44,48 @@ export class ServerSocket {
       }
     }
     socket.handshake.auth.sessionID = uuidv4();
+    sessionStore.add(socket.handshake.auth.sessionID);
     return next();
   };
 
   StartListeners = async (socket: Socket) => {
-    console.info("Message received from " + socket.id);
-    console.log("done loading");
+    console.log(`Start session from: ${socket.handshake.auth.sessionID}`);
 
     socket.on("message", async (message: string) => {
       this.messageListener(message);
-      console.log("reach backend")
+      console.log("reach backend");
       await this.messageSender(socket, message);
     });
 
-    socket.on("upload", async (file, callback) => {
+    socket.on("upload", async (file, callback): Promise<any> => {
       // console.log(file); // <Buffer 25 50 44 ...>
 
       // save the content to the disk, for example
       const pdfFilePath = `uploads/${socket.handshake.auth.sessionID}.pdf`;
-      await writeFile(pdfFilePath, file, (err) => {
-        callback({ succeed: false });
-      });
+      await fs.writeFile(pdfFilePath, file);
 
       const pdfHandler = new PdfHandler(pdfFilePath);
       const parseParagraphArray: string[] = await pdfHandler.getParsedContent();
 
-      for (let paragraph of parseParagraphArray) {
+      parseParagraphArray.forEach(async (paragraph) => {
         await this.weaviateRoute.addClassObj(
           socket.handshake.auth.sessionID,
           paragraph
         );
-      }
+      })
 
       callback({ succeed: true });
     });
 
     socket.on("disconnect", async () => {
-      await unlink(`uploads/${socket.handshake.auth.sessionID}.pdf`);
+      const pdfPath = `uploads/${socket.handshake.auth.sessionID}.pdf`;
+      if (await Bun.file(pdfPath)) await unlink(pdfPath);
       sessionStore.delete(socket.handshake.auth.sessionID);
       console.info("Disconnect received from: " + socket.id);
     });
   };
 
-  messageListener(message: string) {
-    
-  }
+  messageListener(message: string) {}
   async messageSender(socket: Socket, message: string): Promise<void> {
     const keywordString = await this.keywordExtractor.extractKeywordFromMessage(
       message
