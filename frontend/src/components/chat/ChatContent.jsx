@@ -9,7 +9,8 @@ const styles = (theme) => ({
     background: theme.palette.text.primary,
     padding: theme.spacing(2),
     borderRadius: '0.75rem 0.75rem 0.75rem 0',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    maxWidth: '25rem',
   },
   paperUser: {
     background: theme.palette.text.secondary,
@@ -19,7 +20,7 @@ const styles = (theme) => ({
     maxWidth: '25rem',
   },
   AITypography: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
   },
   userTypography: {
     paddingRight: theme.spacing(1),
