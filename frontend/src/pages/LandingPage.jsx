@@ -69,7 +69,7 @@ const LandingPage = (props) => {
       <Grid container spacing={6} className={classes.gridContainer}>
         <Grid item xs={12} md={7}>
           <Typography variant="h3" fontWeight={700} className={classes.title}>
-            Introducing, EOC Chatbot
+            Introducing, InsurAI
           </Typography>
           <Typography variant="h6" className={classes.subtitle}>
             Empower your decision-Making with instant exxpert answers to all of your Evidence of Coverage questions from our EOC Large Language Model. Maximize your coverage and make informed choices for a prosperous future!
