@@ -8,11 +8,12 @@ const theme = createTheme({
   spacing: 8,
   palette: {
     background: {
-      default: '#000',
+      default: '#D2EEFC',
+      secondary: '#FFF',
     },
     text: {
-      primary: '#424242',
-      secondary: '#E8EAED',
+      primary: '#44b8f3',
+      secondary: '#1A3673',
     },
   },
   typography: {
