@@ -8,8 +8,6 @@ import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
 import Backdrop from "@mui/material/Backdrop";
 
-import { socket } from "./socket.js";
-
 function App() {
   // file Object
   const [file, setFile] = useState(null);
@@ -27,20 +25,23 @@ function App() {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    alert("File upload cancelled. Please upload a file.");
   };
 
   return (
     <>
-      <ChatContainer />
-      <Backdrop open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Upload a File</DialogTitle>
-          <DialogContent>
-            <Upload onUpload={handleUpload} />
-          </DialogContent>
-        </Dialog>
-      </Backdrop>
+      {!open ? <ChatContainer />
+      :
+        (
+        <Backdrop open={open} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Upload a File</DialogTitle>
+            <DialogContent>
+              <Upload onUpload={handleUpload} />
+            </DialogContent>
+          </Dialog>
+        </Backdrop>
+        )}
     </>
   );
 }
