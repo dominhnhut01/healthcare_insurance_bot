@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
 
-const Upload = () => {
+const Upload = ({ onUpload }) => {
     const [error, setError] = useState(null);
     const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
         accept: 'application/pdf',
@@ -17,7 +17,7 @@ const Upload = () => {
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
-
+    
             try {
                 console.log('Uploading file...', file);
                 const response = await fetch('http://localhost:4800/uploads', {
@@ -25,8 +25,8 @@ const Upload = () => {
                     body: formData,
                 });
                 const data = await response.json();
-                console.log(data);  // Log the response from the server
-                // navigate('/display');  // Navigate to the display route
+                console.log("here is data", data);  // Log the response from the server
+                onUpload(file);  // Make sure data contains the URL of the uploaded file
             } catch (error) {
                 console.error('There was an error uploading the file:', error);
             }
