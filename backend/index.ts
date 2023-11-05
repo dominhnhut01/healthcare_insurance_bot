@@ -3,7 +3,7 @@ import express from 'express';
 import { ServerSocket } from './socket';
 import multer from 'multer';
 import fs from 'fs';
-import { PdfHandler } from "./PdfHandler";
+import { PdfHandler } from "./UploadPDF/PdfHandler.ts";
 import * as dotenv from 'dotenv';
 import { weaviateRoute } from './Weaviate/weaviateRoute'; // import the weaviateRoute
 
