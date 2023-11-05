@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { getDocument } from 'pdfjs-dist';
 import dotenv from 'dotenv';
+import { number } from 'cohere-ai/core/schemas';
 
 export class PdfHandler {
   pdfBuffer: Uint8Array;
