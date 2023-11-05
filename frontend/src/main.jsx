@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom'
@@ -24,7 +23,6 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -33,5 +31,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </BrowserRouter>
       </ThemeProvider>
     </StyledEngineProvider>
-  </React.StrictMode>,
 );
