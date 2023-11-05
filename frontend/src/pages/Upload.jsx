@@ -20,13 +20,13 @@ const Upload = () => {
 
             try {
                 console.log('Uploading file...', file);
-                const response = await fetch('http://localhost:3001/uploads', {
+                const response = await fetch('http://localhost:4800/uploads', {
                     method: 'POST',
                     body: formData,
                 });
                 const data = await response.json();
                 console.log(data);  // Log the response from the server
-                navigate('/display');  // Navigate to the display route
+                // navigate('/display');  // Navigate to the display route
             } catch (error) {
                 console.error('There was an error uploading the file:', error);
             }
