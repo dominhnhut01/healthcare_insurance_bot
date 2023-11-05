@@ -3,6 +3,7 @@ import withStyles from "@mui/styles/withStyles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { CircularProgress } from "@mui/material";
 
 const styles = (theme) => ({
   paperAI: {
@@ -37,7 +38,7 @@ const ChatContent = (props) => {
           {messageType === "AI" ? (
             <Paper className={classes.paperAI} elevation={3}>
               <Typography variant="body1" className={classes.AITypography}>
-                {message}
+                {message === "AI is thinking" ? <CircularProgress color="inherit" size={20} style={{ marginRight: '0.5rem', marginTop: '0.25rem'}}/> : message}
               </Typography>
             </Paper>
           ) : (
