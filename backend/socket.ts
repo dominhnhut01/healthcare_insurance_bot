@@ -79,6 +79,7 @@ export class ServerSocket {
 
     socket.on("disconnect", async () => {
       await unlink(`uploads/${socket.handshake.auth.sessionID}.pdf`);
+      sessionStore.delete(socket.handshake.auth.sessionID);
       console.info("Disconnect received from: " + socket.id);
     });
   };
