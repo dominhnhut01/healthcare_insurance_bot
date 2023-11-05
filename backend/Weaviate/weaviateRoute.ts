@@ -6,7 +6,8 @@ export class WeaviateRoute {
     private client: WeaviateClient;
     private COHERE_API_KEY = process.env["COHERE_API_KEY"] as string;
     private WEAVIATE_API_KEY = process.env["WEAVIATE_API_KEY"] as string;
-
+    private maxDistance = 0.145;
+    
     // Initialize a weaviate client using the appropriate
     // weaviate api key and cohere api key
     constructor() {
@@ -72,11 +73,14 @@ export class WeaviateRoute {
                 operator: 'Equal',
                 valueText: uid,
             })
-            .withNearText({concepts: [keyword]})
-            .withFields('uID information')
-            .withGenerate({singlePrompt: `This is the information: {information}\nSummarize the info and ` +
-                `use it to concisely answer this question:${question}, preferably within 150 words`})
+            .withNearText({ 
+                concepts: [keyword],
+                distance: this.maxDistance,
+            })
+            .withGenerate({singlePrompt: `Given this information: {information}` +
+                `provide a CONCISE answer to this question:${question}`})
             .withLimit(1)
+            .withFields('uID information')
             .do();
         console.log(JSON.stringify(res, null, 2));
         return res;
