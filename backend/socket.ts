@@ -42,8 +42,9 @@ export class ServerSocket {
         socket.handshake.auth.sessionID = sessionID;
         return next();
       }
-      socket.handshake.auth.sessionID = uuidv4();
     }
+    socket.handshake.auth.sessionID = uuidv4();
+    return next();
   };
 
   StartListeners = async (socket: Socket) => {
@@ -52,6 +53,7 @@ export class ServerSocket {
 
     socket.on("message", async (message: string) => {
       this.messageListener(message);
+      console.log("reach backend")
       await this.messageSender(socket, message);
     });
 
@@ -85,7 +87,7 @@ export class ServerSocket {
   };
 
   messageListener(message: string) {
-    console.log(message);
+    
   }
   async messageSender(socket: Socket, message: string): Promise<void> {
     const keywordString = await this.keywordExtractor.extractKeywordFromMessage(
@@ -97,6 +99,7 @@ export class ServerSocket {
       keywordString,
       message
     );
+    // console.log(`answer: ${response.data.Get.EOC[0]._additional.generate.singleResult}`)
     //const response = await this.weaviateRoute.getEverything('testID0');
     socket.emit(
       "message",
