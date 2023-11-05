@@ -1,34 +1,45 @@
 import React from "react";
 import withStyles from "@mui/styles/withStyles";
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const styles = (theme) => ({
-  paper: {
+  paperAI: {
     background: theme.palette.background.default,
     padding: theme.spacing(2),
-    borderRadius:theme.spacing(2),
+    borderRadius: theme.spacing(2),
+  },
+  paperUser: {
+    background: "blue",
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(2),
+    textAlign: 'right',
+  },
+  AITypography: {
+    paddingLeft: theme.spacing(2),
+  },
+  userTypography: {
+    paddingLeft: theme.spacing(2),
   },
 });
 
 const ChatContent = (props) => {
-  const { classes } = props;
-
   return (
-    <Grid container direction="column" spacing={2}>
-      <Grid item>
-        <Paper className={classes.paper} elevation={2}>
-          <Typography variant="body1">
-            Siu
+    <Grid item>
+      {props.messageType === "AI" ? (
+        <Paper className={props.classes.paperAI} elevation={2}>
+          <Typography variant="body1" className={props.classes.AITypography}>
+            {props.message}
           </Typography>
         </Paper>
-      </Grid>
-      <Grid item>
-        <Typography variant="body1">
-          Chatting
-        </Typography>
-      </Grid>
+      ) : (
+        <Paper className={props.classes.paperUser} elevation={2}>
+          <Typography variant="body1" className={props.classes.userTypography}>
+            {props.message}
+          </Typography>
+        </Paper>
+      )}
     </Grid>
   );
 };

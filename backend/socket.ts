@@ -26,11 +26,9 @@ export class ServerSocket {
     this.io.on("connect", this.StartListeners);
   }
 
-
   StartListeners = async (socket: Socket) => {
     console.info("Message received from " + socket.id);
-    console.log("done loading")
-
+    console.log("done loading");
 
     socket.on("message", async (message: string) => {
         this.messageListener(message);
@@ -39,7 +37,6 @@ export class ServerSocket {
 
     socket.on("disconnect", () => {
       console.info("Disconnect received from: " + socket.id);
-      socket.emit("disconnect")
     });
   };
 
