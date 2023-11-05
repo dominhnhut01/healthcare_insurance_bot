@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { BrowserRouter } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline';
 import App from './App.jsx';
 
@@ -27,7 +28,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </StyledEngineProvider>
   </React.StrictMode>,
