@@ -2,18 +2,11 @@ import http from 'http';
 import express from 'express';
 import { ServerSocket } from './socket';
 import * as dotenv from 'dotenv';
-import { weaviateRoute } from './Weaviate/weaviateRoute'; 
+import { WeaviateRoute } from './Weaviate/weaviateRoute';
 
 dotenv.config;
 
-const weaviate_key = process.env.WEAVIATE_API_KEY ?? '';
-const cohere_key = process.env.COHERE_API_KEY ?? '';
-
-if (!weaviate_key) {
-    console.log("API KEY WAS NOT PROVIDED");
-}
-
-const weaviateClient = new weaviateRoute(weaviate_key, cohere_key);
+const weaviateClient = new WeaviateRoute();
 
 const app = express();
 

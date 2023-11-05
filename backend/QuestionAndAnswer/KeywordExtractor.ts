@@ -4,10 +4,10 @@ import { CohereClient } from "cohere-ai";
 
 dotenv.config();
 
-class KeywordExtractor {
+export class KeywordExtractor {
   private COHERE_API_KEY = process.env["COHERE_API_KEY"] as string;
   private cohere: CohereClient;
-  private constructor() {
+  public constructor() {
     this.cohere = new CohereClient({
       token: this.COHERE_API_KEY,
     });
