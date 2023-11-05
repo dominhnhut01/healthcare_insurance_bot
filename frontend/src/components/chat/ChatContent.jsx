@@ -6,20 +6,21 @@ import Typography from "@mui/material/Typography";
 
 const styles = (theme) => ({
   paperAI: {
-    background: theme.palette.text.primary,
+    background: theme.palette.text.secondary,
     padding: theme.spacing(2),
     borderRadius: '0.75rem 0.75rem 0.75rem 0',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    maxWidth: '25rem',
   },
   paperUser: {
-    background: theme.palette.text.secondary,
+    background: theme.palette.text.primary,
     padding: theme.spacing(2),
     alignSelf:'flex-end',
     borderRadius: '0.75rem 0.75rem 0 0.75rem',
     maxWidth: '25rem',
   },
   AITypography: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
   },
   userTypography: {
     paddingRight: theme.spacing(1),
