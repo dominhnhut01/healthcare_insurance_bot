@@ -38,6 +38,7 @@ export class PdfHandler {
     }
     return textContents;
   }
+
 }
 // const pdfHandler = new PdfHandler('./test2.pdf');
 // console.log(await pdfHandler.getParsedContent());
