@@ -47,12 +47,13 @@ export class WeaviateRoute {
     }
 
     // Add a class object to the cluster
-    async addClassObj(info: string) {
+    async addClassObj(uid:string, info: string) {
         let batcher: ObjectsBatcher = this.client.batch.objectsBatcher();
 
         const classObject = {
             class: "EOC",
             properties: {
+                UID: uid,
                 information: info
             }
         };
@@ -63,17 +64,38 @@ export class WeaviateRoute {
     }
 
     // Query objects from the cluster using the provided query string
-    async generativeQuery(query: string) {
+    async generativeQuery(uid: string, keyword: string, question: string) {
         const res = await this.client.graphql.get()
             .withClassName('EOC')
-            .withFields('information')
-            .withNearText({concepts: [query]})
-            .withGenerate({singlePrompt: 'Select out the most important parts in the {information}'})
+            .withWhere({
+                path: ['uID'],
+                operator: 'Equal',
+                valueText: uid,
+            })
+            .withNearText({concepts: [keyword]})
+            .withFields('uID information')
+            .withGenerate({singlePrompt: `This is the information: {information}\nSummarize the info and ` +
+                `use it to concisely answer this question:${question}, preferably within 150 words`})
             .withLimit(1)
             .do();
-       
-        //console.log(JSON.stringify(res, null, 2));
+        console.log(JSON.stringify(res, null, 2));
         return res;
+    }
+
+    // This is only for testing purposes
+    async getEverything(uid: string) {
+        const res = await this.client.graphql.get()
+            .withClassName('EOC')
+            .withWhere({
+                path: ['uID'],
+                operator: 'Equal',
+                valueText: uid,
+            })
+            .withFields('uID information')
+            .withNearText({concepts: ['everything']})
+            .withLimit(20)
+            .do();
+        console.log(JSON.stringify(res, null, 2));
     }
 
 }
