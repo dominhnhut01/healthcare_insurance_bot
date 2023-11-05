@@ -42,6 +42,7 @@ const ChatInput = (props) => {
   const handleSendMessage = (event) => {
     event.preventDefault();
     props.inputEventListener(message);
+    setMessage('');
   };
 
   return (
