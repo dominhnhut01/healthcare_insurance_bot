@@ -90,17 +90,25 @@ export class ServerSocket {
     const keywordString = await this.keywordExtractor.extractKeywordFromMessage(
       message
     );
-    const uid = socket.handshake.auth.sessionID; // Currently hard coded, available options are 'testID0' and 'testID1' but there is no notable differences
+    const uid = socket.handshake.auth.sessionID;
+    const test_uid = 'testID1';
     const response = await this.weaviateRoute.generativeQuery(
-      uid,
+      test_uid,
       keywordString,
       message
     );
     // console.log(`answer: ${response.data.Get.EOC[0]._additional.generate.singleResult}`)
     //const response = await this.weaviateRoute.getEverything('testID0');
-    socket.emit(
-      "message",
-      response.data.Get.EOC[0]._additional.generate.singleResult
-    );
+    if (!response || !response.data || !response.data.Get || !response.data.Get.EOC || response.data.Get.EOC.length == 0) {
+      socket.emit(
+        "message",
+        "There is not enough information in the document you provided or the topic is not related!"
+      );
+    } else {
+      socket.emit(
+        "message",
+        response.data.Get.EOC[0]._additional.generate.singleResult
+      );
+    }
   }
 }

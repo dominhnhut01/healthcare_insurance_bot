@@ -8,9 +8,11 @@ import weaviate, {
 import classDefinition from "./classDefinition";
 
 export class WeaviateRoute {
+
   private client: WeaviateClient;
   private COHERE_API_KEY = process.env["COHERE_API_KEY"] as string;
   private WEAVIATE_API_KEY = process.env["WEAVIATE_API_KEY"] as string;
+  private maxDistance = 0.145;
 
   // Initialize a weaviate client using the appropriate
   // weaviate api key and cohere api key
@@ -73,28 +75,27 @@ export class WeaviateRoute {
       console.log(res);
     });
   }
-
+  
   // Query objects from the cluster using the provided query string
   async generativeQuery(uid: string, keyword: string, question: string) {
-    const res = await this.client.graphql
-      .get()
-      .withClassName("EOC")
-      .withWhere({
-        path: ["uID"],
-        operator: "Equal",
-        valueText: uid,
-      })
-      .withNearText({ concepts: [keyword] })
-      .withFields("uID information")
-      .withGenerate({
-        singlePrompt:
-          `This is the information: {information}\nSummarize the info and ` +
-          `use it to concisely answer this question:${question}, preferably within 150 words`,
-      })
-      .withLimit(1)
-      .do();
-    console.log(JSON.stringify(res, null, 2));
-    return res;
+      const res = await this.client.graphql.get()
+          .withClassName('EOC')
+          .withWhere({
+              path: ['uID'],
+              operator: 'Equal',
+              valueText: uid,
+          })
+          .withNearText({ 
+              concepts: [keyword],
+              distance: this.maxDistance,
+          })
+          .withGenerate({singlePrompt: `Given this information: {information}` +
+              `provide a CONCISE answer to this question:${question}`})
+          .withLimit(1)
+          .withFields('uID information')
+          .do();
+      console.log(JSON.stringify(res, null, 2));
+      return res;
   }
 
   // This is only for testing purposes
