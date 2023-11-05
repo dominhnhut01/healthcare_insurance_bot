@@ -67,17 +67,18 @@ export class WeaviateRoute {
     async generativeQuery(uid: string, keyword: string, question: string) {
         const res = await this.client.graphql.get()
             .withClassName('EOC')
-            .withFields('uID information')
             .withWhere({
                 path: ['uID'],
                 operator: 'Equal',
                 valueText: uid,
             })
             .withNearText({concepts: [keyword]})
+            .withFields('uID information')
             .withGenerate({singlePrompt: `This is the information: {information}\nSummarize the info and ` +
                 `use it to concisely answer this question:${question}, preferably within 150 words`})
             .withLimit(1)
             .do();
+        console.log(JSON.stringify(res, null, 2));
         return res;
     }
 
