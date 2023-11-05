@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { getDocument } from 'pdfjs-dist';
 import dotenv from 'dotenv';
+import { number } from 'cohere-ai/core/schemas';
 
 export class PdfHandler {
   pdfBuffer: Uint8Array;
@@ -27,7 +28,7 @@ export class PdfHandler {
     // construct the content
     const textContents: string[] = [];
 
-    for (let pageNumber = 31; pageNumber <= 40; pageNumber++) {
+    for (let pageNumber = Math.min(numPages, 10); pageNumber <= numPages; pageNumber++) {
       const page = await pdfDocument.getPage(pageNumber);
       const textContent = await page.getTextContent();
       const pageText = textContent.items.forEach((item) => {
