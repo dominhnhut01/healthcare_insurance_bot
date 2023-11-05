@@ -37,16 +37,18 @@ const ChatContainer = (props) => {
     setMessages((prevMessages) => [
       ...prevMessages,
       { messageType: "User", message: message },
+      {messageType: "AI", message: "AI is thinking"},
     ]);
     console.log(`Sending message ${message}`)
     socket.emit("message", message);
   };
 
   const receiveMessage = (message) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { messageType: "AI", message: message },
-    ]);
+    setMessages((prevMessages) => {
+      const newMessages = [...prevMessages];
+      newMessages[newMessages.length - 1].message = message;
+      return newMessages;
+    });
   }
 
   useEffect(() => {
