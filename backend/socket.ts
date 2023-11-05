@@ -61,11 +61,20 @@ export class ServerSocket {
       // save the content to the disk, for example
       const pdfFilePath = `uploads/${socket.handshake.auth.sessionID}.pdf`;
       await writeFile(pdfFilePath, file, (err) => {
-        callback({ message: err ? "failure" : "success" });
+        callback({ succeed: false });
       });
 
       const pdfHandler = new PdfHandler(pdfFilePath);
       const parseParagraphArray: string[] = await pdfHandler.getParsedContent();
+
+      for (let paragraph of parseParagraphArray) {
+        await this.weaviateRoute.addClassObj(
+          socket.handshake.auth.sessionID,
+          paragraph
+        );
+      }
+
+      callback({ succeed: true });
     });
 
     socket.on("disconnect", async () => {
@@ -81,7 +90,13 @@ export class ServerSocket {
     const keywordString = await this.keywordExtractor.extractKeywordFromMessage(
       message
     );
-    const response = await this.weaviateRoute.generativeQuery(keywordString);
+    const uid = socket.handshake.auth.sessionID; // Currently hard coded, available options are 'testID0' and 'testID1' but there is no notable differences
+    const response = await this.weaviateRoute.generativeQuery(
+      uid,
+      keywordString,
+      message
+    );
+    //const response = await this.weaviateRoute.getEverything('testID0');
     socket.emit(
       "message",
       response.data.Get.EOC[0]._additional.generate.singleResult
