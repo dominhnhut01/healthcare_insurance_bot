@@ -1,18 +1,20 @@
 import weaviate, { WeaviateClient, ApiKey, WeaviateClass, ObjectsBatcher, GraphQLGetter} from 'weaviate-ts-client';
 import classDefinition from './classDefinition';
 
-export class weaviateRoute {
+export class WeaviateRoute {
 
     private client: WeaviateClient;
+    private COHERE_API_KEY = process.env["COHERE_API_KEY"] as string;
+    private WEAVIATE_API_KEY = process.env["WEAVIATE_API_KEY"] as string;
 
     // Initialize a weaviate client using the appropriate
     // weaviate api key and cohere api key
-    constructor(apiKey: string, cohereKey: string) {
+    constructor() {
         this.client = weaviate.client({
             scheme: 'https',
             host: 'eoc-cluster-nl8w5r28.weaviate.network',
-            apiKey: new ApiKey(apiKey),
-            headers: { 'X-Cohere-Api-Key': cohereKey },
+            apiKey: new ApiKey(this.WEAVIATE_API_KEY),
+            headers: { 'X-Cohere-Api-Key': this.COHERE_API_KEY },
         })
     }
 
