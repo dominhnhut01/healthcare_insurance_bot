@@ -20,7 +20,7 @@ const Upload = () => {
 
             try {
                 console.log('Uploading file...', file);
-                const response = await fetch('http://localhost:4800/uploads', {
+                const response = await fetch('http://localhost:3001/uploads', {
                     method: 'POST',
                     body: formData,
                 });
