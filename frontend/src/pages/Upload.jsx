@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
+import { socket } from '../socket';
 
 const Upload = ({ onUpload }) => {
     const [error, setError] = useState(null);
@@ -15,15 +16,11 @@ const Upload = ({ onUpload }) => {
     const handleUpload = async () => {
         const file = acceptedFiles[0];
         if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
+            
     
             try {
                 console.log('Uploading file...', file);
-                const response = await fetch('http://localhost:4800/uploads', {
-                    method: 'POST',
-                    body: formData,
-                });
+                socket.emit("upload")
                 const data = await response.json();
                 console.log("here is data", data);  // Log the response from the server
                 onUpload(file);  // Make sure data contains the URL of the uploaded file
