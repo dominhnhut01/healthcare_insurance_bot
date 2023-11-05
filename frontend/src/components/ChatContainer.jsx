@@ -1,43 +1,47 @@
-import { useState, useEffect } from "react";
-import withStyles from "@mui/styles/withStyles";
-import Container from "@mui/material/Container";
-import ChatInput from "./chat/ChatInput";
+import { useState, useEffect } from 'react';
+import withStyles from '@mui/styles/withStyles';
+import Container from '@mui/material/Container';
+import ChatInput from './chat/ChatInput';
 import Grid from "@mui/material/Grid";
-import { socket } from "../socket";
-import ChatContent from "./chat/ChatContent";
-import { BACKGROUND_SECONDARY_COLOR } from "../shared/Constants";
+import Paper from '@mui/material/Paper';
+import { socket } from '../socket';
+import ChatContent from './chat/ChatContent';
 
 const styles = (theme) => ({
   container: {
-    background: BACKGROUND_SECONDARY_COLOR,
     marginTop: theme.spacing(4),
     borderRadius: theme.spacing(2),
     height: "50rem",
   },
   chat: {
-    height: "45rem",
-    overflow: "auto",
-    padding: theme.spacing(1.5),
+    height: '45rem',
+    overflow: 'auto',
+    padding: theme.spacing(3),
+  },
+  input: {
+    paddingLeft: '2rem',
+    paddingRight: '2rem',
+    paddingBottom: '1rem',
   },
 });
 
 const ChatContainer = (props) => {
   const { classes } = props;
-  const [messages, setMessages] = useState([]); //[{messageType: "AI" | "User", message: string}]
+  const [messages, setMessages] = useState([]);
 
-  function inputMessageListener(newMessage) {
+  const inputMessageListener = (newMessage) => {
     sendMessage(newMessage);
-  }
+  };
 
-  function sendMessage(message) {
+  const sendMessage = (message) => {
     setMessages((prevMessages) => [
       ...prevMessages,
       { messageType: "User", message: message },
     ]);
     socket.emit("message", message);
-  }
+  };
 
-  function receiveMessage(message) {
+  const receiveMessage = (message) => {
     setMessages((prevMessages) => [
       ...prevMessages,
       { messageType: "AI", message: message },
@@ -51,25 +55,20 @@ const ChatContainer = (props) => {
     });
   }, []);
 
-
   return (
     <Container maxWidth="md" className={classes.container}>
-      <Grid container direction="column">
-        <Grid item className={classes.chat}>
-          <Grid container direction="column" spacing={2}>
-            {messages.map((message, index) => (
-              <ChatContent
-                messageType={message.messageType}
-                message={message.message}
-                key={index}
-              />
-            ))}
+      <Paper elevation={3}>
+        <Grid container direction="column">
+          <Grid item className={classes.chat}>
+            <ChatContent
+              messages={messages}
+            />
+          </Grid>
+          <Grid item className={classes.input}>
+            <ChatInput inputEventListener={inputMessageListener} />
           </Grid>
         </Grid>
-        <Grid item>
-          <ChatInput inputEventListener={inputMessageListener} />
-        </Grid>
-      </Grid>
+      </Paper>
     </Container>
   );
 };

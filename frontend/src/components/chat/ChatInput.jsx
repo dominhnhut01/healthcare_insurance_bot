@@ -7,28 +7,23 @@ import SendIcon from "@mui/icons-material/Send";
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: '#F0F2F5',
     "& input": {
-      color: "#FFF",
+      color: theme.palette.text.secondary,
     },
-    "& label.Mui-focused": {
+    "& label": {
       color: theme.palette.text.secondary,
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: theme.palette.text.primary,
-      },
-      "&:hover fieldset": {
-        borderColor: theme.palette.text.primary,
-      },
-      "&.Mui-focused fieldsets": {
-        borderColor: theme.palette.text.primary,
+        border: 'none',
       },
     },
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(5),
+    paddingLeft: theme.spacing(1),
   },
   icon: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.secondary,
   },
   iconButton: {
     "&:hover, &:active": {
@@ -40,21 +35,24 @@ const styles = (theme) => ({
 const ChatInput = (props) => {
   const [message, setMessage] = useState("");
   const handleSendMessage = (event) => {
-    event.preventDefault();
-    props.inputEventListener(message);
-    setMessage('');
+    if (message.length > 0) {
+      event.preventDefault();
+      props.inputEventListener(message);
+      setMessage('');
+    }
   };
 
   return (
     <form onSubmit={handleSendMessage}>
       <TextField
         fullWidth
-        label="Type your message"
+        placeholder="Type your message ..."
         variant="outlined"
         className={props.classes.root}
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         InputProps={{
+          disableUnderline: true,
           endAdornment: (
             <InputAdornment position="end">
               <IconButton type="submit" className={props.classes.iconButton}>
