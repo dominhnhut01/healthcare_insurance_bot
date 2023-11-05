@@ -4,7 +4,7 @@ import Upload from './pages/Upload.jsx'
 // import Display from './pages/Display.jsx'
 import ChatContainer from './components/ChatContainer';
 
-import './App.css'
+// import './App.css'
 
 function App() {
   const [file, setFile] = useState(null)
