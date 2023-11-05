@@ -72,7 +72,7 @@ const LandingPage = (props) => {
             Introducing, InsurAI
           </Typography>
           <Typography variant="h6" className={classes.subtitle}>
-            Empower your decision-Making with instant exxpert answers to all of your Evidence of Coverage questions from our EOC Large Language Model. Maximize your coverage and make informed choices for a prosperous future!
+            Empower your decision-making with instant expert answers to all of your questions about your Evidence of Coverage (EOC) from our EOC Large Language Model. Maximize your coverage and make informed choices for a prosperous future!
           </Typography>
           <Button
             variant="contained"
