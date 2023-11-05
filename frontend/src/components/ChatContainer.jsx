@@ -45,7 +45,7 @@ const ChatContainer = (props) => {
   }
 
   useEffect(() => {
-    socket.on("message", async (message) => {
+    socket.on("message", (message) => {
       console.log(`received message: ${message}`);
       receiveMessage(message);
     });
