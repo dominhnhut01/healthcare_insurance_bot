@@ -90,7 +90,7 @@ export class WeaviateRoute {
               distance: this.maxDistance,
           })
           .withGenerate({singlePrompt: `Given this information: {information}` +
-              `provide a CONCISE answer to this question:${question}`})
+              `provide a CONCISE answer to this question:${question}\nONLY include the most RELEVANT information`})
           .withLimit(1)
           .withFields('uID information')
           .do();
