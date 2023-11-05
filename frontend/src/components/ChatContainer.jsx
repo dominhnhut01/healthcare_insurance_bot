@@ -38,6 +38,7 @@ const ChatContainer = (props) => {
       ...prevMessages,
       { messageType: "User", message: message },
     ]);
+    console.log(`Sending message ${message}`)
     socket.emit("message", message);
   };
 
