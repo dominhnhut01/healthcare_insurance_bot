@@ -1,9 +1,13 @@
 import { Server as HttpServer } from "http";
 import { Socket, Server } from "socket.io";
+import { KeywordExtractor } from "./QuestionAndAnswer/KeywordExtractor";
+import { WeaviateRoute } from "./Weaviate/weaviateRoute";
 
 export class ServerSocket {
   public static instance: ServerSocket;
   public io: Server;
+  public keywordExtractor: KeywordExtractor = new KeywordExtractor();
+  public weaviateRoute: WeaviateRoute = new WeaviateRoute();
 
   /** Master list of all connected rooms */
 
@@ -30,7 +34,7 @@ export class ServerSocket {
 
     socket.on("message", async (message: string) => {
         this.messageListener(message);
-        this.messageSender(socket, message);
+        await this.messageSender(socket, message);
     })
 
     socket.on("disconnect", () => {
@@ -42,7 +46,9 @@ export class ServerSocket {
   messageListener(message: string) {
     console.log(message);
   }
-  messageSender(socket: Socket, message: string) {
-    socket.emit("message", message);
+  async messageSender(socket: Socket, message: string): Promise<void> {
+    const keywordString = await this.keywordExtractor.extractKeywordFromMessage(message);
+    const response = await this.weaviateRoute.generativeQuery(keywordString);
+    socket.emit("message", response.data.Get.EOC[0]._additional.generate.singleResult);
   }
 }
