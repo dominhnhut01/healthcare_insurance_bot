@@ -4,8 +4,20 @@ import { ServerSocket } from './socket';
 import multer from 'multer';
 import fs from 'fs';
 import { PdfHandler } from "./PdfHandler";
+import * as dotenv from 'dotenv';
+import { weaviateRoute } from './Weaviate/weaviateRoute'; // import the weaviateRoute
 
+dotenv.config();
 const PORT = process.env.PORT || 3001;
+
+const weaviate_key = process.env.WEAVIATE_API_KEY ?? '';
+const cohere_key = process.env.COHERE_API_KEY ?? '';
+
+if (!weaviate_key) {
+    console.log("API KEY WAS NOT PROVIDED");
+}
+
+const weaviateClient = new weaviateRoute(weaviate_key, cohere_key);
 
 const app = express();
 

@@ -15,7 +15,7 @@ export class PdfHandler {
     }
   }
 
-  async getParsedContent(): Promise<string> {
+  async getParsedContent(): Promise<string[]> {
     // initalize pdf
     const pdfjsLib = require('pdfjs-dist');
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs-dist/build/pdf.worker.js';
@@ -30,13 +30,14 @@ export class PdfHandler {
     for (let pageNumber = 31; pageNumber <= 40; pageNumber++) {
       const page = await pdfDocument.getPage(pageNumber);
       const textContent = await page.getTextContent();
-      const pageText = textContent.items.map((item) => {
+      const pageText = textContent.items.forEach((item) => {
         if ('str' in item) {
-          return item.str;
+          textContents.push(item.str);
         }
-      }).join(' ');
-      textContents.push(`Page ${pageNumber} text: ${pageText}`);
+      });
     }
-    return textContents.join('\n');
+    return textContents;
   }
 }
+// const pdfHandler = new PdfHandler('./test2.pdf');
+// console.log(await pdfHandler.getParsedContent());
