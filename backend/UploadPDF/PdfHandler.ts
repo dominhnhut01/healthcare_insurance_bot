@@ -26,18 +26,20 @@ export class PdfHandler {
     const numPages: number = pdfDocument.numPages;
 
     // construct the content
-    const textContents: string[] = [];
-
-    for (let pageNumber = 30; pageNumber <= 40; pageNumber++) {
+    const pagesContents: string[] = [];
+    
+    for (let pageNumber = 30; pageNumber <= 45; pageNumber++) {
       const page = await pdfDocument.getPage(pageNumber);
       const textContent = await page.getTextContent();
-      const pageText = textContent.items.forEach((item) => {
+      const pageText: string[] = [];
+      textContent.items.forEach((item) => {
         if ('str' in item) {
-          textContents.push(item.str);
+          pageText.push(item.str);
         }
       });
+      pagesContents.push(pageText.join(' '))
     }
-    return textContents;
+    return pagesContents;
   }
 
 }
